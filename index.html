@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boba & Yogurt Haven</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <header class="navbar">
+            <div class="container nav-container">
+                <div class="logo">
+                    <h1>Boba<span>Haven</span></h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#menu">Menu</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <section class="hero">
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <h2>Freshly Brewed & <br>Creamy Delights</h2>
+                    <p>Experience the finest Boba and Yogurt blends in the city. Handcrafted with love and the freshest ingredients.</p>
+                    <a href="#menu" class="btn primary-btn">Order Now</a>
+                </div>
+                <div class="hero-image">
+                    <img src="https://images.unsplash.com/photo-1558857563-b371f30ca6a5?q=80&w=600" alt="Refreshing Boba">
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Layout Container -->
+        <main id="main-content">
+            <section id="menu" class="section">
+                <div class="container">
+                    <h2 class="section-title">Signature Flavors</h2>
+                    <div class="menu-grid">
+                        <!-- Matcha Meadow -->
+                        <div class="menu-item" data-id="1" data-name="Matcha Meadow" data-price="40">
+                            <div class="item-image">
+                                <img src="https://images.unsplash.com/photo-1627847483517-5a5744c4ec3c?q=80&w=400" alt="Matcha Meadow">
+                            </div>
+                            <div class="item-info">
+                                <h3>Matcha Meadow</h3>
+                                <p class="price">GHS 40.00</p>
+                                <button class="btn add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+
+                        <!-- Taro Cloud -->
+                        <div class="menu-item" data-id="2" data-name="Taro Cloud" data-price="40">
+                            <div class="item-image">
+                                <img src="https://images.unsplash.com/photo-1619158403521-ed9795026d47?q=80&w=400" alt="Taro Cloud">
+                            </div>
+                            <div class="item-info">
+                                <h3>Taro Cloud</h3>
+                                <p class="price">GHS 40.00</p>
+                                <button class="btn add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+
+                        <!-- Green Zenith -->
+                        <div class="menu-item" data-id="3" data-name="Green Zenith" data-price="40">
+                            <div class="item-image">
+                                <img src="https://images.unsplash.com/photo-1515442261904-6c3e7c30a781?q=80&w=400" alt="Green Zenith">
+                            </div>
+                            <div class="item-info">
+                                <h3>Green Zenith</h3>
+                                <p class="price">GHS 40.00</p>
+                                <button class="btn add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+
+                        <!-- The Classic Tee -->
+                        <div class="menu-item" data-id="4" data-name="The Classic Tee" data-price="40">
+                            <div class="item-image">
+                                <img src="https://images.unsplash.com/photo-1558857563-b371f30ca6a5?q=80&w=400" alt="The Classic Tee">
+                            </div>
+                            <div class="item-info">
+                                <h3>The Classic Tee</h3>
+                                <p class="price">GHS 40.00</p>
+                                <button class="btn add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cart Sidebar / Overlay -->
+            <div id="cart-overlay" class="overlay">
+                <div class="cart-container">
+                    <div class="cart-header">
+                        <h2>Your Selection</h2>
+                        <button id="close-cart" class="close-btn">&times;</button>
+                    </div>
+                    <div id="cart-items">
+                        <!-- Cart items will be rendered here -->
+                        <p class="empty-msg">Your cart is empty</p>
+                    </div>
+                    <div class="cart-footer">
+                        <div class="total">
+                            <span>Total</span>
+                            <span id="cart-total">GHS 0.00</span>
+                        </div>
+                        <button class="btn checkout-btn">Checkout</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Floating Cart Toggle -->
+            <button id="cart-toggle" class="cart-toggle">
+                <span class="cart-icon">🛒</span>
+                <span id="cart-count">0</span>
+            </button>
+        </main>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-logo">
+                        <h3>Boba<span>Haven</span></h3>
+                        <p>Your daily dose of happiness in a cup.</p>
+                    </div>
+                    <div class="footer-links">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="#">Menu</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-social">
+                        <h4>Follow Us</h4>
+                        <div class="social-icons">
+                            <span>FB</span> | <span>IG</span> | <span>TW</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 Boba Haven. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
