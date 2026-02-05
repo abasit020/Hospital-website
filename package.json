@@ -1,6 +1,6 @@
 {
   "name": "boba-haven",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "Professional Boba and Yogurt menu selection website with Node.js and Supabase backend.",
   "main": "server.js",
   "scripts": {

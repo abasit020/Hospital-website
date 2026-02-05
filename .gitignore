@@ -1,4 +1,6 @@
 node_modules/
-*.log
-verification/*.png
 .env
+*.log
+test-results/
+*.db
+.last-run.json
