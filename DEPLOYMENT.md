@@ -25,4 +25,4 @@ In the Render service settings, go to the **Environment** tab and add:
 - **Start Command**: `npm start`
 
 ---
-*Note: If these environment variables are not set, the app will automatically use mock data for demonstration purposes.*
+*Note: Ensure your environment variables are set correctly. The app requires a functional Supabase connection to display the menu and process orders.*

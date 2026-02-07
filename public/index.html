@@ -3,110 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boba & Yogurt Haven</title>
+    <title>Boba & Yogurt Haven | Uber Eats</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="app">
-        <header class="navbar">
-            <div class="container nav-container">
-                <div class="logo">
-                    <h1>Boba<span>Haven</span></h1>
+    <!-- Top Navigation Bar -->
+    <header class="ue-header">
+        <div class="ue-container">
+            <div class="ue-header-content">
+                <div class="ue-logo">
+                    <span class="ue-logo-uber">Uber</span><span class="ue-logo-eats">Eats</span>
                 </div>
-                <nav>
-                    <ul>
-                        <li><a href="#menu">Menu</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Contact</a></li>
-                    </ul>
-                </nav>
+                <div class="ue-search-bar">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="black" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M21 21L16.65 16.65" stroke="black" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <input type="text" placeholder="Search Boba Haven">
+                </div>
+                <div class="ue-nav-actions">
+                    <button id="cart-btn" class="ue-btn ue-btn-cart">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 22C9.55228 22 10 21.5523 10 21C10 20.4477 9.55228 20 9 20C8.44772 20 8 20.4477 8 21C8 21.5523 8.44772 22 9 22Z" fill="white"/>
+                            <path d="M20 22C20.5523 22 21 21.5523 21 21C21 20.4477 20.5523 20 20 20C19.4477 20 19 20.4477 19 21C19 21.5523 19.4477 22 20 22Z" fill="white"/>
+                            <path d="M1 1H5L7.68 14.39C7.77144 14.8504 8.02191 15.264 8.38755 15.5583C8.75318 15.8526 9.2107 16.009 9.68 16H19.4C19.8693 16.009 20.3268 15.8526 20.6925 15.5583C21.0581 15.264 21.3086 14.8504 21.4 14.39L23 6H6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>Cart • <span id="cart-count">0</span></span>
+                    </button>
+                    <button class="ue-btn ue-btn-signin">Sign in</button>
+                </div>
             </div>
-        </header>
+        </div>
+    </header>
 
-        <section class="hero">
-            <div class="container hero-container">
-                <div class="hero-content">
-                    <h2>Freshly Brewed & <br>Creamy Delights</h2>
-                    <p>Experience the finest Boba and Yogurt blends in the city. Handcrafted with love and the freshest ingredients.</p>
-                    <a href="#menu" class="btn primary-btn">Order Now</a>
-                </div>
-                <div class="hero-image">
-                    <img src="https://images.unsplash.com/photo-1558857563-b371f30ca6a5?q=80&w=600" alt="Refreshing Boba">
+    <main>
+        <!-- Restaurant Hero -->
+        <section class="ue-restaurant-hero">
+            <div class="ue-hero-banner" style="background-image: url('https://images.unsplash.com/photo-1558857563-b371f30ca6a5?q=80&w=1200&auto=format&fit=crop')"></div>
+            <div class="ue-container">
+                <div class="ue-restaurant-info">
+                    <h1 class="ue-restaurant-name">Boba & Yogurt Haven (East Legon)</h1>
+                    <div class="ue-restaurant-meta">
+                        <span class="ue-rating">★ 4.8 (500+)</span>
+                        <span class="ue-meta-dot">•</span>
+                        <span class="ue-category">Bubble Tea • Yogurt • Desserts</span>
+                        <span class="ue-meta-dot">•</span>
+                        <span class="ue-more-info">More info</span>
+                    </div>
+                    <div class="ue-delivery-info">
+                        <span class="ue-delivery-time">25–35 min</span>
+                        <span class="ue-delivery-fee">GHS 5.00 Delivery Fee</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Main Layout Container -->
-        <main id="main-content">
-            <section id="menu" class="section">
-                <div class="container">
-                    <h2 class="section-title">Signature Flavors</h2>
-                    <div class="menu-grid">
-                        <!-- Items will be loaded from the backend API -->
-                        <p class="loading-msg">Loading our delicious selection...</p>
-                    </div>
-                </div>
-            </section>
+        <!-- Category Tabs -->
+        <nav class="ue-category-nav">
+            <div class="ue-container">
+                <ul class="ue-category-list">
+                    <li class="active"><a href="#signature">Signature Flavors</a></li>
+                    <li><a href="#yogurt">Frozen Yogurt</a></li>
+                    <li><a href="#toppings">Toppings</a></li>
+                </ul>
+            </div>
+        </nav>
 
-            <!-- Cart Sidebar / Overlay -->
-            <div id="cart-overlay" class="overlay">
-                <div class="cart-container">
-                    <div class="cart-header">
-                        <h2>Your Selection</h2>
-                        <button id="close-cart" class="close-btn">&times;</button>
-                    </div>
-                    <div id="cart-items">
-                        <!-- Cart items will be rendered here -->
-                        <p class="empty-msg">Your cart is empty</p>
-                    </div>
-                    <div class="cart-footer">
-                        <div class="total">
-                            <span>Total</span>
-                            <span id="cart-total">GHS 0.00</span>
-                        </div>
-                        <button class="btn checkout-btn">Checkout</button>
+        <!-- Menu Section -->
+        <section class="ue-menu-section">
+            <div class="ue-container">
+                <div id="signature" class="ue-menu-category">
+                    <h2 class="ue-category-title">Signature Flavors</h2>
+                    <div class="ue-menu-grid">
+                        <!-- Items loaded dynamically -->
+                        <div class="ue-loading">Finding your favorites...</div>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Floating Cart Toggle -->
-            <button id="cart-toggle" class="cart-toggle">
-                <span class="cart-icon">🛒</span>
-                <span id="cart-count">0</span>
-            </button>
-        </main>
-
-        <footer class="footer">
-            <div class="container">
-                <div class="footer-content">
-                    <div class="footer-logo">
-                        <h3>Boba<span>Haven</span></h3>
-                        <p>Your daily dose of happiness in a cup.</p>
-                    </div>
-                    <div class="footer-links">
-                        <h4>Quick Links</h4>
-                        <ul>
-                            <li><a href="#">Menu</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Terms of Service</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-social">
-                        <h4>Follow Us</h4>
-                        <div class="social-icons">
-                            <span>FB</span> | <span>IG</span> | <span>TW</span>
-                        </div>
-                    </div>
+        <!-- Cart Sidebar -->
+        <div id="cart-sidebar" class="ue-cart-sidebar">
+            <div class="ue-cart-content">
+                <div class="ue-cart-header">
+                    <h2>Your Order</h2>
+                    <button id="close-cart" class="ue-close-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
                 </div>
-                <div class="footer-bottom">
-                    <p>&copy; 2024 Boba Haven. All rights reserved.</p>
+                <div id="cart-items" class="ue-cart-items-list">
+                    <p class="ue-empty-msg">Add items to start a basket</p>
+                </div>
+                <div class="ue-cart-footer">
+                    <div class="ue-total-row">
+                        <span>Subtotal</span>
+                        <span id="cart-total">GHS 0.00</span>
+                    </div>
+                    <p class="ue-tax-info">Fees and taxes calculated at checkout</p>
+                    <button class="ue-btn-checkout">Go to checkout</button>
                 </div>
             </div>
-        </footer>
-    </div>
+        </div>
+        <div id="ue-overlay" class="ue-overlay"></div>
+    </main>
+
+    <footer class="ue-footer">
+        <div class="ue-container">
+            <div class="ue-footer-top">
+                <div class="ue-footer-brand">
+                    <div class="ue-logo">
+                        <span class="ue-logo-uber">Uber</span><span class="ue-logo-eats">Eats</span>
+                    </div>
+                </div>
+                <div class="ue-footer-links">
+                    <div class="ue-link-column">
+                        <a href="#">Get Help</a>
+                        <a href="#">Buy gift cards</a>
+                        <a href="#">Add your restaurant</a>
+                        <a href="#">Sign up to deliver</a>
+                    </div>
+                    <div class="ue-link-column">
+                        <a href="#">Restaurants near me</a>
+                        <a href="#">View all cities</a>
+                        <a href="#">Pick up near me</a>
+                        <a href="#">About Uber Eats</a>
+                    </div>
+                </div>
+            </div>
+            <div class="ue-footer-bottom">
+                <div class="ue-social-links">
+                    <span>FB</span> <span>TW</span> <span>IG</span>
+                </div>
+                <div class="ue-legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms</a>
+                    <a href="#">Pricing</a>
+                    <span>© 2024 Uber Technologies Inc.</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <script src="script.js"></script>
 </body>
 </html>

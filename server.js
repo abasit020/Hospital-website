@@ -1,63 +1,51 @@
+require('dotenv').config();
 const express = require('express');
-const cors = require('cors');
 const path = require('path');
 const supabase = require('./db');
-require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
 app.use(express.json());
+app.use(express.static('public'));
 
-// Serve static files from the public directory
-app.use(express.static(path.join(__dirname, 'public')));
-
-// GET /api/menu - Fetch items from Supabase
+// Get Menu
 app.get('/api/menu', async (req, res) => {
     try {
         const { data, error } = await supabase
             .from('items')
             .select('*');
 
-        if (error) {
-            console.error(error);
-            throw error;
-        }
-        res.json(data);
-    } catch (err) {
-        console.error('Error fetching menu:', err.message);
-        res.status(500).json({ error: 'Failed to fetch menu items' });
+        if (error) throw error;
+        res.json(data || []);
+    } catch (error) {
+        console.error('Error fetching menu:', error);
+        res.status(500).json({ error: error.message });
     }
 });
 
-// POST /api/orders - Save order to Supabase
+// Create Order
 app.post('/api/orders', async (req, res) => {
     try {
-        const { items, total } = req.body;
+        const { customer_name, total, items } = req.body;
 
-        if (!items || !total) {
-            return res.status(400).json({ error: 'Missing order details' });
-        }
-
-        // Insert real JSON, DO NOT stringify items
         const { data, error } = await supabase
             .from('orders')
             .insert([{
-                items: items,
-                total: total
+                customer_name,
+                total,
+                items: items
             }])
             .select();
 
         if (error) {
-            console.error(error);
-            return res.status(500).json({ error: 'Failed to place order' });
+            console.error('Supabase error:', error);
+            return res.status(400).json({ error: error.message });
         }
-
-        res.status(201).json({ message: 'Order placed successfully', order: data ? data[0] : null });
-    } catch (err) {
-        console.error('Error placing order:', err.message);
-        res.status(500).json({ error: 'Failed to place order' });
+        res.status(201).json(data[0]);
+    } catch (error) {
+        console.error('Server error:', error);
+        res.status(500).json({ error: error.message });
     }
 });
 
