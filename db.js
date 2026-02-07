@@ -8,8 +8,8 @@ let supabase;
 
 // Check if credentials exist and are not placeholders
 const isValid = supabaseUrl && supabaseKey &&
-                supabaseUrl !== 'https://wwiekkmgzldgachygqei.supabase.co' &&
-                supabaseKey !== 'sb_publishable_uQ8yT-PQ69gHHlh3-tKJWA_l_TdRpCW';
+                supabaseUrl !== 'YOUR_SUPABASE_URL' &&
+                supabaseKey !== 'YOUR_SUPABASE_ANON_KEY';
 
 if (!isValid) {
     console.warn('Using Mock Supabase Client because credentials are not provided or invalid.');
@@ -29,7 +29,9 @@ if (!isValid) {
             },
             insert: (val) => {
                 console.log('Mock DB Insert to', table, ':', val);
-                return Promise.resolve({ data: val, error: null });
+                return {
+                    select: () => Promise.resolve({ data: val, error: null })
+                };
             }
         })
     };
