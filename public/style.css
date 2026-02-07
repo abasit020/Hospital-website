@@ -103,10 +103,6 @@ body {
     gap: 8px;
 }
 
-.ue-btn-cart:hover {
-    background: var(--ue-gray-800);
-}
-
 .ue-btn-signin {
     background: var(--ue-white);
     color: var(--ue-black);
@@ -280,6 +276,44 @@ body {
     overflow-y: auto;
 }
 
+/* Cart Item Row */
+.ue-cart-item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--ue-gray-100);
+}
+
+.ue-qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ue-qty-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--ue-gray-300);
+    background: var(--ue-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.ue-qty-btn:hover {
+    background: var(--ue-gray-100);
+}
+
+.ue-item-info-main {
+    flex: 1;
+    margin-left: 12px;
+}
+
 .ue-cart-footer {
     border-top: 1px solid var(--ue-gray-200);
     padding-top: 24px;
@@ -309,6 +343,11 @@ body {
     font-weight: 600;
     border-radius: 4px;
     cursor: pointer;
+}
+
+.ue-btn-checkout:disabled {
+    background: var(--ue-gray-300);
+    cursor: not-allowed;
 }
 
 .ue-close-btn {
@@ -381,16 +420,6 @@ body {
 .ue-legal a {
     color: inherit;
     text-decoration: none;
-}
-
-/* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.ue-menu-item {
-    animation: fadeIn 0.4s ease-out backwards;
 }
 
 /* Mobile responsive */

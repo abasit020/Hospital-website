@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         items.forEach((item, index) => {
             const itemElement = document.createElement('div');
             itemElement.className = 'ue-menu-item';
-            itemElement.style.animationDelay = `${index * 0.1}s`;
+            itemElement.style.animationDelay = `${index * 0.05}s`;
             itemElement.innerHTML = `
                 <div class="ue-item-details">
                     <h3 class="ue-item-name">${item.name}</h3>
@@ -61,8 +61,14 @@ document.addEventListener('DOMContentLoaded', () => {
         openCart();
     }
 
-    function removeFromCart(itemId) {
-        cart = cart.filter(i => i.id !== itemId);
+    function updateQuantity(itemId, delta) {
+        const item = cart.find(i => i.id === itemId);
+        if (item) {
+            item.quantity += delta;
+            if (item.quantity <= 0) {
+                cart = cart.filter(i => i.id !== itemId);
+            }
+        }
         updateCartUI();
     }
 
@@ -80,21 +86,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const cartItem = document.createElement('div');
                 cartItem.className = 'ue-cart-item-row';
-                cartItem.style.display = 'flex';
-                cartItem.style.justifyContent = 'space-between';
-                cartItem.style.alignItems = 'center';
-                cartItem.style.marginBottom = '16px';
                 cartItem.innerHTML = `
-                    <div style="display: flex; gap: 12px; align-items: center;">
-                        <span style="font-weight: 600; background: #eee; padding: 2px 8px; border-radius: 4px;">${item.quantity}</span>
-                        <div>
-                            <p style="font-weight: 600; font-size: 14px;">${item.name}</p>
-                            <p style="font-size: 12px; color: #666;">GHS ${item.price.toFixed(2)}</p>
-                        </div>
+                    <div class="ue-qty-controls">
+                        <button class="ue-qty-btn minus" data-id="${item.id}">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="ue-qty-btn plus" data-id="${item.id}">+</button>
                     </div>
-                    <div style="display: flex; gap: 12px; align-items: center;">
-                        <span style="font-weight: 500;">GHS ${(item.price * item.quantity).toFixed(2)}</span>
-                        <button class="remove-item" data-id="${item.id}" style="background:none; border:none; cursor:pointer; color:#06C167; font-weight:600;">Remove</button>
+                    <div class="ue-item-info-main">
+                        <p style="font-weight: 600; font-size: 14px;">${item.name}</p>
+                        <p style="font-size: 12px; color: #666;">GHS ${item.price.toFixed(2)}</p>
+                    </div>
+                    <div style="font-weight: 500;">
+                        GHS ${(item.price * item.quantity).toFixed(2)}
                     </div>
                 `;
                 cartItemsList.appendChild(cartItem);
@@ -104,12 +107,12 @@ document.addEventListener('DOMContentLoaded', () => {
         cartCount.textContent = count;
         cartTotal.textContent = `GHS ${total.toFixed(2)}`;
 
-        // Attach remove events
-        document.querySelectorAll('.remove-item').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const id = parseInt(e.target.dataset.id);
-                removeFromCart(id);
-            });
+        // Attach quantity events
+        document.querySelectorAll('.ue-qty-btn.plus').forEach(btn => {
+            btn.addEventListener('click', () => updateQuantity(parseInt(btn.dataset.id), 1));
+        });
+        document.querySelectorAll('.ue-qty-btn.minus').forEach(btn => {
+            btn.addEventListener('click', () => updateQuantity(parseInt(btn.dataset.id), -1));
         });
     }
 
@@ -138,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     customer_name: 'Guest Customer',
-                    total: totalValue, // Matches schema 'total'
+                    total: totalValue,
                     items: cart
                 })
             });
