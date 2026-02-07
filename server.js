@@ -20,7 +20,10 @@ app.get('/api/menu', async (req, res) => {
             .from('items')
             .select('*');
 
-        if (error) throw error;
+        if (error) {
+            console.error(error);
+            throw error;
+        }
         res.json(data);
     } catch (err) {
         console.error('Error fetching menu:', err.message);
@@ -37,12 +40,20 @@ app.post('/api/orders', async (req, res) => {
             return res.status(400).json({ error: 'Missing order details' });
         }
 
+        // Insert real JSON, DO NOT stringify items
         const { data, error } = await supabase
             .from('orders')
-            .insert([{ items: JSON.stringify(items), total, created_at: new Date() }])
+            .insert([{
+                items: items,
+                total: total
+            }])
             .select();
 
-        if (error) throw error;
+        if (error) {
+            console.error(error);
+            return res.status(500).json({ error: 'Failed to place order' });
+        }
+
         res.status(201).json({ message: 'Order placed successfully', order: data ? data[0] : null });
     } catch (err) {
         console.error('Error placing order:', err.message);
