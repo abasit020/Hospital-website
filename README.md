@@ -1,19 +1,19 @@
-# Boba Haven - Professional Menu Selection
+# AgroSmart Ghana - AI Soil Monitor
 
-A modern, high-fidelity web application for a Boba and Yogurt business. Features a professional Uber Eats-style interface, a functional shopping cart, and a Node.js/Supabase backend.
+A professional, AI-driven soil monitoring and crop recommendation platform designed specifically for farmers in Ghana.
 
 ## Features
-- **Signature Flavors:** Matcha Meadow, Taro Cloud, Green Zenith, and The Classic Tee (all GHS 40.00).
-- **Professional UI:** Uber Eats design system implementation with sticky headers, minimalist cards, and a sleek cart sidebar.
-- **Cart System:** Add multiple items, adjust quantities, and see real-time totals.
-- **Backend:** Node.js/Express server that integrates directly with Supabase.
-- **Cloud Database:** Persistent menu items and orders stored in Supabase.
+- **AI Soil Analysis:** Heuristic engine that analyzes pH, NPK levels, and moisture to provide localized agricultural advice.
+- **Crop Suitability:** Recommends optimal Ghanaian staples such as Cocoa, Maize, Cassava, and Yam based on real-time soil data.
+- **Historical Tracking:** Keep records of soil tests across different locations and seasons.
+- **Professional Dashboard:** A clean, high-fidelity user interface built for ease of use in the field.
+- **Secure Backend:** Node.js/Express server with Supabase integration for persistent data storage.
 
 ## Getting Started
 
 ### Prerequisites
-- [Node.js](https://nodejs.org/) (v14 or higher)
-- A [Supabase](https://supabase.com/) account.
+- [Node.js](https://nodejs.org/)
+- [Supabase](https://supabase.com/) account for data persistence.
 
 ### Installation
 1. Clone the repository.
@@ -21,19 +21,19 @@ A modern, high-fidelity web application for a Boba and Yogurt business. Features
    ```bash
    npm install
    ```
-3. Set up your environment variables in a `.env` file (see [DEPLOYMENT.md](DEPLOYMENT.md)):
-   - `SUPABASE_URL`
-   - `SUPABASE_ANON_KEY`
+3. Set up your environment variables in a `.env` file:
+   - `SUPABASE_URL`: Your Supabase Project URL.
+   - `SUPABASE_ANON_KEY`: Your Supabase API Key.
 4. Start the server:
    ```bash
    npm start
    ```
 
-## Project Structure
-- `public/`: Contains frontend assets (HTML, CSS, JS).
-- `db.js`: Supabase connection logic.
-- `server.js`: Express API endpoints.
-- `schema.sql`: SQL commands to set up your Supabase database.
+## Technical Stack
+- **Frontend:** Vanilla HTML5, CSS3 (Inter font), JavaScript.
+- **Backend:** Node.js, Express.
+- **Database:** Supabase (PostgreSQL).
+- **Analysis:** Logic-based AI recommendation engine.
 
 ## Deployment
-See [DEPLOYMENT.md](DEPLOYMENT.md) for instructions on how to host this application on Render.
+AgroSmart Ghana is optimized for deployment on platforms like Render or Vercel. Ensure environment variables are configured in your hosting dashboard.

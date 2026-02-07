@@ -1,175 +1,87 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const menuGrid = document.querySelector('.ue-menu-grid');
-    const cartBtn = document.getElementById('cart-btn');
-    const closeCartBtn = document.getElementById('close-cart');
-    const cartSidebar = document.getElementById('cart-sidebar');
-    const overlay = document.getElementById('ue-overlay');
-    const cartItemsList = document.getElementById('cart-items');
-    const cartCount = document.getElementById('cart-count');
-    const cartTotal = document.getElementById('cart-total');
-    const checkoutBtn = document.querySelector('.ue-btn-checkout');
+    const soilForm = document.getElementById('soil-form');
+    const resultsPanel = document.getElementById('results-panel');
+    const cropList = document.getElementById('crop-list');
+    const adviceText = document.getElementById('advice-text');
+    const analysisDate = document.getElementById('analysis-date');
+    const historyList = document.getElementById('history-list');
 
-    let cart = [];
-    let menuItems = [];
+    // Initialize
+    fetchHistory();
 
-    // Initialize Menu
-    async function fetchMenu() {
-        try {
-            const response = await fetch('/api/menu');
-            if (!response.ok) throw new Error('Failed to fetch menu');
-            menuItems = await response.json();
-            renderMenu(menuItems);
-        } catch (error) {
-            console.error('Error fetching menu:', error);
-            menuGrid.innerHTML = '<p>Unable to load menu. Please check your database connection.</p>';
-        }
-    }
+    soilForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-    function renderMenu(items) {
-        menuGrid.innerHTML = '';
-        if (items.length === 0) {
-            menuGrid.innerHTML = '<p>The menu is currently empty.</p>';
-            return;
-        }
-        items.forEach((item, index) => {
-            const itemElement = document.createElement('div');
-            itemElement.className = 'ue-menu-item';
-            itemElement.style.animationDelay = `${index * 0.05}s`;
-            itemElement.innerHTML = `
-                <div class="ue-item-details">
-                    <h3 class="ue-item-name">${item.name}</h3>
-                    <p class="ue-item-price">GHS ${item.price.toFixed(2)}</p>
-                </div>
-                <div class="ue-item-image">
-                    <img src="${item.image_url || 'https://via.placeholder.com/120'}" alt="${item.name}">
-                </div>
-            `;
-            itemElement.addEventListener('click', () => addToCart(item));
-            menuGrid.appendChild(itemElement);
-        });
-    }
+        const submitBtn = soilForm.querySelector('button');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Analyzing...';
 
-    // Cart Logic
-    function addToCart(item) {
-        const existingItem = cart.find(i => i.id === item.id);
-        if (existingItem) {
-            existingItem.quantity += 1;
-        } else {
-            cart.push({ ...item, quantity: 1 });
-        }
-        updateCartUI();
-        openCart();
-    }
-
-    function updateQuantity(itemId, delta) {
-        const item = cart.find(i => i.id === itemId);
-        if (item) {
-            item.quantity += delta;
-            if (item.quantity <= 0) {
-                cart = cart.filter(i => i.id !== itemId);
-            }
-        }
-        updateCartUI();
-    }
-
-    function updateCartUI() {
-        cartItemsList.innerHTML = '';
-        let total = 0;
-        let count = 0;
-
-        if (cart.length === 0) {
-            cartItemsList.innerHTML = '<p class="ue-empty-msg">Add items to start a basket</p>';
-        } else {
-            cart.forEach(item => {
-                total += item.price * item.quantity;
-                count += item.quantity;
-
-                const cartItem = document.createElement('div');
-                cartItem.className = 'ue-cart-item-row';
-                cartItem.innerHTML = `
-                    <div class="ue-qty-controls">
-                        <button class="ue-qty-btn minus" data-id="${item.id}">-</button>
-                        <span>${item.quantity}</span>
-                        <button class="ue-qty-btn plus" data-id="${item.id}">+</button>
-                    </div>
-                    <div class="ue-item-info-main">
-                        <p style="font-weight: 600; font-size: 14px;">${item.name}</p>
-                        <p style="font-size: 12px; color: #666;">GHS ${item.price.toFixed(2)}</p>
-                    </div>
-                    <div style="font-weight: 500;">
-                        GHS ${(item.price * item.quantity).toFixed(2)}
-                    </div>
-                `;
-                cartItemsList.appendChild(cartItem);
-            });
-        }
-
-        cartCount.textContent = count;
-        cartTotal.textContent = `GHS ${total.toFixed(2)}`;
-
-        // Attach quantity events
-        document.querySelectorAll('.ue-qty-btn.plus').forEach(btn => {
-            btn.addEventListener('click', () => updateQuantity(parseInt(btn.dataset.id), 1));
-        });
-        document.querySelectorAll('.ue-qty-btn.minus').forEach(btn => {
-            btn.addEventListener('click', () => updateQuantity(parseInt(btn.dataset.id), -1));
-        });
-    }
-
-    function openCart() {
-        cartSidebar.classList.add('open');
-        overlay.classList.add('visible');
-    }
-
-    function closeCart() {
-        cartSidebar.classList.remove('open');
-        overlay.classList.remove('visible');
-    }
-
-    // Checkout Logic
-    async function handleCheckout() {
-        if (cart.length === 0) return;
-
-        checkoutBtn.disabled = true;
-        checkoutBtn.textContent = 'Processing...';
-
-        const totalValue = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+        const formData = {
+            farmer_name: document.getElementById('farmer_name').value,
+            location: document.getElementById('location').value,
+            ph: parseFloat(document.getElementById('ph').value),
+            moisture: parseFloat(document.getElementById('moisture').value),
+            nitrogen: parseFloat(document.getElementById('nitrogen').value),
+            phosphorus: parseFloat(document.getElementById('phosphorus').value),
+            potassium: parseFloat(document.getElementById('potassium').value)
+        };
 
         try {
-            const response = await fetch('/api/orders', {
+            const response = await fetch('/api/analyze', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    customer_name: 'Guest Customer',
-                    total: totalValue,
-                    items: cart
-                })
+                body: JSON.stringify(formData)
             });
 
-            if (response.ok) {
-                alert('Order placed successfully!');
-                cart = [];
-                updateCartUI();
-                closeCart();
-            } else {
-                const err = await response.json();
-                throw new Error(err.error || 'Failed to place order');
-            }
+            if (!response.ok) throw new Error('Analysis failed');
+
+            const result = await response.json();
+            displayResults(result);
+            fetchHistory();
+
+            // Scroll to results
+            resultsPanel.scrollIntoView({ behavior: 'smooth' });
+
         } catch (error) {
-            console.error('Checkout error:', error);
-            alert('Checkout failed: ' + error.message);
+            console.error('Error:', error);
+            alert('Something went wrong with the AI analysis. Please try again.');
         } finally {
-            checkoutBtn.disabled = false;
-            checkoutBtn.textContent = 'Go to checkout';
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Run AI Analysis';
         }
+    });
+
+    function displayResults(data) {
+        resultsPanel.classList.remove('hidden');
+        cropList.textContent = data.suitable_crops;
+        adviceText.textContent = data.recommendation;
+        analysisDate.textContent = new Date(data.created_at).toLocaleDateString('en-GH', {
+            month: 'short', day: 'numeric', year: 'numeric'
+        });
     }
 
-    // Event Listeners
-    cartBtn.addEventListener('click', openCart);
-    closeCartBtn.addEventListener('click', closeCart);
-    overlay.addEventListener('click', closeCart);
-    checkoutBtn.addEventListener('click', handleCheckout);
+    async function fetchHistory() {
+        try {
+            const response = await fetch('/api/history');
+            const data = await response.json();
 
-    // Initial load
-    fetchMenu();
+            if (data.length > 0) {
+                historyList.innerHTML = '';
+                data.slice(0, 5).forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'history-item';
+                    div.innerHTML = `
+                        <span class="loc">${item.location}</span>
+                        <span class="crops">${item.suitable_crops}</span>
+                        <div style="font-size: 11px; margin-top: 5px; color: #888;">
+                            ${new Date(item.created_at).toLocaleDateString()}
+                        </div>
+                    `;
+                    historyList.appendChild(div);
+                });
+            }
+        } catch (error) {
+            console.error('History fetch error:', error);
+        }
+    }
 });

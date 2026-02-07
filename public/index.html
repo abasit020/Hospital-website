@@ -3,150 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boba & Yogurt Haven | Uber Eats</title>
+    <title>AgroSmart Ghana | AI Soil Monitor</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Top Navigation Bar -->
-    <header class="ue-header">
-        <div class="ue-container">
-            <div class="ue-header-content">
-                <div class="ue-logo">
-                    <span class="ue-logo-uber">Uber</span><span class="ue-logo-eats">Eats</span>
+    <header class="agro-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-text">AgroSmart</span><span class="logo-sub">Ghana</span>
                 </div>
-                <div class="ue-search-bar">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="black" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M21 21L16.65 16.65" stroke="black" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <input type="text" placeholder="Search Boba Haven">
-                </div>
-                <div class="ue-nav-actions">
-                    <button id="cart-btn" class="ue-btn ue-btn-cart">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9 22C9.55228 22 10 21.5523 10 21C10 20.4477 9.55228 20 9 20C8.44772 20 8 20.4477 8 21C8 21.5523 8.44772 22 9 22Z" fill="white"/>
-                            <path d="M20 22C20.5523 22 21 21.5523 21 21C21 20.4477 20.5523 20 20 20C19.4477 20 19 20.4477 19 21C19 21.5523 19.4477 22 20 22Z" fill="white"/>
-                            <path d="M1 1H5L7.68 14.39C7.77144 14.8504 8.02191 15.264 8.38755 15.5583C8.75318 15.8526 9.2107 16.009 9.68 16H19.4C19.8693 16.009 20.3268 15.8526 20.6925 15.5583C21.0581 15.264 21.3086 14.8504 21.4 14.39L23 6H6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <span>Cart • <span id="cart-count">0</span></span>
-                    </button>
-                    <button class="ue-btn ue-btn-signin">Sign in</button>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="active">Monitor</a></li>
+                        <li><a href="#">Crops</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </nav>
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name=Farmer+Kofi&background=2e7d32&color=fff" alt="User" class="avatar">
+                    <span>Farmer Kofi</span>
                 </div>
             </div>
         </div>
     </header>
 
-    <main>
-        <!-- Restaurant Hero -->
-        <section class="ue-restaurant-hero">
-            <div class="ue-hero-banner" style="background-image: url('https://images.unsplash.com/photo-1558857563-b371f30ca6a5?q=80&w=1200&auto=format&fit=crop')"></div>
-            <div class="ue-container">
-                <div class="ue-restaurant-info">
-                    <h1 class="ue-restaurant-name">Boba & Yogurt Haven (East Legon)</h1>
-                    <div class="ue-restaurant-meta">
-                        <span class="ue-rating">★ 4.8 (500+)</span>
-                        <span class="ue-meta-dot">•</span>
-                        <span class="ue-category">Bubble Tea • Yogurt • Desserts</span>
-                        <span class="ue-meta-dot">•</span>
-                        <span class="ue-more-info">More info</span>
+    <main class="container">
+        <section class="dashboard-grid">
+            <!-- Soil Entry Form -->
+            <div class="card entry-card">
+                <h2>New Soil Analysis</h2>
+                <p class="subtitle">Enter soil parameters from your testing kit.</p>
+                <form id="soil-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="farmer_name">Farmer Name</label>
+                            <input type="text" id="farmer_name" placeholder="Full Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location (Town/Region)</label>
+                            <input type="text" id="location" placeholder="e.g. Kumasi, Ashanti" required>
+                        </div>
                     </div>
-                    <div class="ue-delivery-info">
-                        <span class="ue-delivery-time">25–35 min</span>
-                        <span class="ue-delivery-fee">GHS 5.00 Delivery Fee</span>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ph">pH Level (0-14)</label>
+                            <input type="number" id="ph" step="0.1" min="0" max="14" placeholder="7.0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="moisture">Moisture Content (%)</label>
+                            <input type="number" id="moisture" min="0" max="100" placeholder="60" required>
+                        </div>
                     </div>
+
+                    <div class="npk-section">
+                        <h3>NPK Levels (mg/kg)</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="nitrogen">Nitrogen (N)</label>
+                                <input type="number" id="nitrogen" min="0" placeholder="20" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phosphorus">Phosphorus (P)</label>
+                                <input type="number" id="phosphorus" min="0" placeholder="15" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="potassium">Potassium (K)</label>
+                                <input type="number" id="potassium" min="0" placeholder="40" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-analyze">Run AI Analysis</button>
+                </form>
+            </div>
+
+            <!-- AI Insights Panel (Initially Hidden) -->
+            <div id="results-panel" class="card results-card hidden">
+                <div class="results-header">
+                    <h2>AI Insights</h2>
+                    <span id="analysis-date" class="date-badge">Feb 7, 2026</span>
+                </div>
+                <div class="suitability-box">
+                    <h3>Optimal Crops for this Soil:</h3>
+                    <p id="crop-list" class="crop-names">Waiting for data...</p>
+                </div>
+                <div class="advice-box">
+                    <h3>Expert Recommendations:</h3>
+                    <p id="advice-text">Please complete the form to generate AI-driven agricultural advice.</p>
+                </div>
+                <div class="actions">
+                    <button class="btn-outline">Download PDF</button>
+                    <button class="btn-outline">Share with Extension Officer</button>
+                </div>
+            </div>
+
+            <!-- Recent History -->
+            <div class="card history-card">
+                <h2>Recent Records</h2>
+                <div id="history-list" class="history-list">
+                    <p class="empty-msg">No records found. Start your first analysis!</p>
                 </div>
             </div>
         </section>
-
-        <!-- Category Tabs -->
-        <nav class="ue-category-nav">
-            <div class="ue-container">
-                <ul class="ue-category-list">
-                    <li class="active"><a href="#signature">Signature Flavors</a></li>
-                    <li><a href="#yogurt">Frozen Yogurt</a></li>
-                    <li><a href="#toppings">Toppings</a></li>
-                </ul>
-            </div>
-        </nav>
-
-        <!-- Menu Section -->
-        <section class="ue-menu-section">
-            <div class="ue-container">
-                <div id="signature" class="ue-menu-category">
-                    <h2 class="ue-category-title">Signature Flavors</h2>
-                    <div class="ue-menu-grid">
-                        <!-- Items loaded dynamically -->
-                        <div class="ue-loading">Finding your favorites...</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Cart Sidebar -->
-        <div id="cart-sidebar" class="ue-cart-sidebar">
-            <div class="ue-cart-content">
-                <div class="ue-cart-header">
-                    <h2>Your Order</h2>
-                    <button id="close-cart" class="ue-close-btn">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M18 6L6 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M6 6L18 18" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </button>
-                </div>
-                <div id="cart-items" class="ue-cart-items-list">
-                    <p class="ue-empty-msg">Add items to start a basket</p>
-                </div>
-                <div class="ue-cart-footer">
-                    <div class="ue-total-row">
-                        <span>Subtotal</span>
-                        <span id="cart-total">GHS 0.00</span>
-                    </div>
-                    <p class="ue-tax-info">Fees and taxes calculated at checkout</p>
-                    <button class="ue-btn-checkout">Go to checkout</button>
-                </div>
-            </div>
-        </div>
-        <div id="ue-overlay" class="ue-overlay"></div>
     </main>
 
-    <footer class="ue-footer">
-        <div class="ue-container">
-            <div class="ue-footer-top">
-                <div class="ue-footer-brand">
-                    <div class="ue-logo">
-                        <span class="ue-logo-uber">Uber</span><span class="ue-logo-eats">Eats</span>
-                    </div>
-                </div>
-                <div class="ue-footer-links">
-                    <div class="ue-link-column">
-                        <a href="#">Get Help</a>
-                        <a href="#">Buy gift cards</a>
-                        <a href="#">Add your restaurant</a>
-                        <a href="#">Sign up to deliver</a>
-                    </div>
-                    <div class="ue-link-column">
-                        <a href="#">Restaurants near me</a>
-                        <a href="#">View all cities</a>
-                        <a href="#">Pick up near me</a>
-                        <a href="#">About Uber Eats</a>
-                    </div>
-                </div>
-            </div>
-            <div class="ue-footer-bottom">
-                <div class="ue-social-links">
-                    <span>FB</span> <span>TW</span> <span>IG</span>
-                </div>
-                <div class="ue-legal">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms</a>
-                    <a href="#">Pricing</a>
-                    <span>© 2024 Uber Technologies Inc.</span>
-                </div>
-            </div>
+    <footer class="agro-footer">
+        <div class="container">
+            <p>&copy; 2026 AgroSmart Ghana. Empowering local farmers with AI technology.</p>
         </div>
     </footer>
 

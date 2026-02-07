@@ -1,28 +1,20 @@
-# Hosting on Render with Supabase
+# Deploying AgroSmart Ghana
 
-Follow these steps to deploy Boba Haven:
+AgroSmart Ghana is a Node.js application that uses Supabase for data persistence.
 
-### 1. Set up Supabase
-1. Create a new project on [Supabase](https://supabase.com/).
-2. Go to the **SQL Editor** and run the contents of `schema.sql` to create your tables.
-3. Go to **Project Settings > API** to find your `URL` and `anon public` key.
+### 1. Database Setup
+1. Log in to [Supabase](https://supabase.com/).
+2. Use the **SQL Editor** to run the commands in `schema.sql`.
+3. Obtain your API URL and Anon Key from **Settings > API**.
 
-### 2. Prepare your Repository
-Ensure your code is pushed to a GitHub, GitLab, or Bitbucket repository.
+### 2. Environment Variables
+Ensure the following variables are set in your deployment environment (e.g., Render Dashboard):
+- `SUPABASE_URL`
+- `SUPABASE_ANON_KEY`
 
-### 3. Create a New Web Service on Render
-1. Log in to your [Render Dashboard](https://dashboard.render.com/).
-2. Click **New +** and select **Web Service**.
-3. Connect your repository.
-
-### 4. Configure Environment Variables
-In the Render service settings, go to the **Environment** tab and add:
-- `SUPABASE_URL`: Your Supabase Project URL.
-- `SUPABASE_ANON_KEY`: Your Supabase API Key.
-
-### 5. Settings
-- **Build Command**: `npm install`
-- **Start Command**: `npm start`
+### 3. Deploy
+- **Build Command:** `npm install`
+- **Start Command:** `npm start`
 
 ---
-*Note: Ensure your environment variables are set correctly. The app requires a functional Supabase connection to display the menu and process orders.*
+*AgroSmart Ghana includes a fallback mechanism that allows the AI analysis engine to function even if the database connection is unavailable, ensuring farmers can always get advice in the field.*
