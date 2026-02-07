@@ -9,6 +9,14 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.static('public'));
 
+// Return config for frontend (Public Anon Key is safe to expose)
+app.get('/api/config', (req, res) => {
+    res.json({
+        supabaseUrl: process.env.SUPABASE_URL || 'https://wwiekkmgzldgachygqei.supabase.co',
+        supabaseAnonKey: process.env.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind3aWVra21nemxkZ2FjaHlncWVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzNjE5MjMsImV4cCI6MjA4NTkzNzkyM30.SVWPBq-xMlXB0E0WpOfCW4fxSPj1zNqe_3awlJRF8bc'
+    });
+});
+
 // AI Soil Analysis Engine
 const CROP_PROFILES = [
     { name: 'Cocoa', minPh: 5.0, maxPh: 7.5, minMoisture: 70, nitrogenReq: 'high' },
@@ -76,7 +84,6 @@ app.post('/api/analyze', async (req, res) => {
             res.status(201).json(data[0]);
         } catch (dbError) {
             console.warn('DB Error, returning local analysis:', dbError.message);
-            // Return the record even if DB fails, so UI works for demo
             res.status(201).json(record);
         }
     } catch (error) {
@@ -95,7 +102,7 @@ app.get('/api/history', async (req, res) => {
         if (error) throw error;
         res.json(data);
     } catch (error) {
-        res.json([]); // Return empty history on error
+        res.json([]);
     }
 });
 

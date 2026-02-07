@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <!-- Supabase JS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <header class="agro-header">
@@ -15,6 +17,9 @@
             <div class="header-content">
                 <div class="logo">
                     <span class="logo-text">AgroSmart</span><span class="logo-sub">Ghana</span>
+                </div>
+                <div id="realtime-status" class="status-indicator">
+                    <span class="dot"></span> <span>Syncing...</span>
                 </div>
                 <nav>
                     <ul>
@@ -82,7 +87,7 @@
                 </form>
             </div>
 
-            <!-- AI Insights Panel (Initially Hidden) -->
+            <!-- AI Insights Panel -->
             <div id="results-panel" class="card results-card hidden">
                 <div class="results-header">
                     <h2>AI Insights</h2>
@@ -104,9 +109,12 @@
 
             <!-- Recent History -->
             <div class="card history-card">
-                <h2>Recent Records</h2>
+                <div class="history-header">
+                    <h2>Live Record Feed</h2>
+                    <span class="live-badge">LIVE</span>
+                </div>
                 <div id="history-list" class="history-list">
-                    <p class="empty-msg">No records found. Start your first analysis!</p>
+                    <p class="empty-msg">Listening for new records...</p>
                 </div>
             </div>
         </section>

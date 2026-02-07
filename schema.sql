@@ -21,3 +21,10 @@ ALTER TABLE soil_tests ENABLE ROW LEVEL SECURITY;
 -- 3. Create policies
 CREATE POLICY "Allow public read access to soil_tests" ON soil_tests FOR SELECT USING (true);
 CREATE POLICY "Allow public insert access to soil_tests" ON soil_tests FOR INSERT WITH CHECK (true);
+
+-- 4. Enable Realtime for the soil_tests table
+-- This allows the frontend to listen for new records in real-time
+BEGIN;
+  DROP PUBLICATION IF EXISTS supabase_realtime;
+  CREATE PUBLICATION supabase_realtime FOR TABLE soil_tests;
+COMMIT;

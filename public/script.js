@@ -1,12 +1,47 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const soilForm = document.getElementById('soil-form');
     const resultsPanel = document.getElementById('results-panel');
     const cropList = document.getElementById('crop-list');
     const adviceText = document.getElementById('advice-text');
     const analysisDate = document.getElementById('analysis-date');
     const historyList = document.getElementById('history-list');
+    const statusText = document.querySelector('#realtime-status span').nextSibling;
 
-    // Initialize
+    let supabase;
+
+    // 1. Initialize Supabase
+    try {
+        const configRes = await fetch('/api/config');
+        const { supabaseUrl, supabaseAnonKey } = await configRes.json();
+
+        supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
+
+        // Setup Real-time Subscription
+        supabase
+            .channel('soil-tests-channel')
+            .on('postgres_changes', {
+                event: 'INSERT',
+                schema: 'public',
+                table: 'soil_tests'
+            }, (payload) => {
+                console.log('Real-time record received:', payload);
+                addRecordToHistory(payload.new, true);
+            })
+            .subscribe((status) => {
+                if (status === 'SUBSCRIBED') {
+                    console.log('Successfully subscribed to real-time updates');
+                    statusText.textContent = ' Real-time Active';
+                } else {
+                    statusText.textContent = ' Syncing...';
+                }
+            });
+
+    } catch (err) {
+        console.error('Real-time initialization failed:', err);
+        statusText.textContent = ' Offline Mode';
+    }
+
+    // 2. Load History
     fetchHistory();
 
     soilForm.addEventListener('submit', async (e) => {
@@ -37,7 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const result = await response.json();
             displayResults(result);
-            fetchHistory();
 
             // Scroll to results
             resultsPanel.scrollIntoView({ behavior: 'smooth' });
@@ -65,23 +99,43 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch('/api/history');
             const data = await response.json();
 
+            historyList.innerHTML = '';
             if (data.length > 0) {
-                historyList.innerHTML = '';
-                data.slice(0, 5).forEach(item => {
-                    const div = document.createElement('div');
-                    div.className = 'history-item';
-                    div.innerHTML = `
-                        <span class="loc">${item.location}</span>
-                        <span class="crops">${item.suitable_crops}</span>
-                        <div style="font-size: 11px; margin-top: 5px; color: #888;">
-                            ${new Date(item.created_at).toLocaleDateString()}
-                        </div>
-                    `;
-                    historyList.appendChild(div);
-                });
+                data.slice(0, 10).forEach(item => addRecordToHistory(item));
+            } else {
+                historyList.innerHTML = '<p class="empty-msg">No records yet. Be the first to analyze!</p>';
             }
         } catch (error) {
             console.error('History fetch error:', error);
+        }
+    }
+
+    function addRecordToHistory(item, isRealtime = false) {
+        // Remove empty message if it exists
+        const emptyMsg = historyList.querySelector('.empty-msg');
+        if (emptyMsg) emptyMsg.remove();
+
+        const div = document.createElement('div');
+        div.className = 'history-item';
+        if (isRealtime) div.style.borderColor = '#fbc02d'; // Highlight real-time updates
+
+        div.innerHTML = `
+            <span class="loc">${item.location}</span>
+            <span class="crops">${item.suitable_crops}</span>
+            <div style="font-size: 11px; margin-top: 5px; color: #888; display: flex; justify-content: space-between;">
+                <span>${new Date(item.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                <span style="font-weight: 600; color: #2e7d32;">${item.ph} pH</span>
+            </div>
+        `;
+
+        if (isRealtime) {
+            historyList.prepend(div);
+            // Limit to 10 items
+            if (historyList.children.length > 10) {
+                historyList.lastElementChild.remove();
+            }
+        } else {
+            historyList.appendChild(div);
         }
     }
 });
